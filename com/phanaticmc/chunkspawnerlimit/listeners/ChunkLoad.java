@@ -26,16 +26,15 @@ public class ChunkLoad implements Listener {
                 spawnercount++;
                 if(spawnercount > limit){
                     Location cloc = new Location(c.getWorld(),c.getX() * 16,64,c.getZ() * 16);
-                    
+                    ItemStack drop = new ItemStack(MOB_SPAWNER);
+                    CreatureSpawner existing = (CreatureSpawner) block;
+                    utils.setSpawnerMob(drop, existing.getSpawnedType());
+                    cloc.getWorld().dropItem(block.getLocation().add(0.5, 0.5, 0.5), drop);
+                    block.setType(AIR);
+                    block.update(true);
                     getServer().getScheduler().scheduleSyncDelayedTask(instance, () -> {
                         cloc.getWorld().getNearbyEntities(cloc, 100,100,100).stream().filter((ent) -> (ent instanceof Player)).map((ent) -> (Player)ent).forEach((player) -> {
                             player.sendMessage("Too many Spawners in this chunk, this block was dropped as an item: x:" + block.getLocation().getBlockX() + " y:" + block.getLocation().getBlockY() + " z:" + block.getLocation().getBlockZ() + " world:" + block.getLocation().getWorld().getName());
-                            ItemStack drop = new ItemStack(MOB_SPAWNER);
-                            CreatureSpawner existing = (CreatureSpawner) block;
-                            utils.setSpawnerMob(drop, existing.getSpawnedType());
-                            cloc.getWorld().dropItem(block.getLocation().add(0.5, 0.5, 0.5), drop);
-                            block.setType(AIR);
-                            block.update(true);
                         });
                     }, 20L);
                 }
