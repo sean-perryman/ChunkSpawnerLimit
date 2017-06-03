@@ -15,16 +15,16 @@ public class BlockPlace implements Listener {
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onBlockPlace(BlockPlaceEvent e){
         Chunk c = e.getBlock().getLocation().getChunk();
-            int spawnercount = 1;
-            for (BlockState block : c.getTileEntities()) {
-                if(block instanceof CreatureSpawner){
-                    spawnercount++;
-                    if(spawnercount > limit){
-                        e.getPlayer().sendMessage("Too many Spawners in this chunk, " + limit + " is the max!");
-                        e.setCancelled(true);
-                        break;
-                    }
+        int spawnercount = 1;
+        for (BlockState block : c.getTileEntities()) {
+            if(block instanceof CreatureSpawner){
+                spawnercount++;
+                if(spawnercount > limit){
+                    e.getPlayer().sendMessage("Too many Spawners in this chunk, " + limit + " is the max!");
+                    e.setCancelled(true);
+                    break;
                 }
             }
+        }
     }
 }
