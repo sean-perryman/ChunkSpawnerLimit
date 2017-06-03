@@ -1,0 +1,15 @@
+name: ChunkSpawnerLimit
+version: 1.0.0
+description: Limits Spawners
+author: PhanaticD
+main: com.phanaticmc.chunkspawnerlimit.ChunkSpawnerLimit
+
+commands:
+  spawnerlist:
+    description: lists spawners
+    usage: /spawnerlist
+    default: op
+  spawnerdelete:
+    description: deletes spawners
+    usage: /spawnerdelete
+    default: op
