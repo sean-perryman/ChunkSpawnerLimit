@@ -4,6 +4,7 @@ import static com.phanaticmc.chunkspawnerlimit.ChunkSpawnerLimit.instance;
 import static com.phanaticmc.chunkspawnerlimit.ChunkSpawnerLimit.limit;
 import com.phanaticmc.chunkspawnerlimit.utils;
 import static org.bukkit.Bukkit.getServer;
+import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import static org.bukkit.Material.AIR;
@@ -15,6 +16,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class ChunkLoad implements Listener {
     
@@ -31,6 +33,10 @@ public class ChunkLoad implements Listener {
                         ItemStack drop = new ItemStack(MOB_SPAWNER);
                         CreatureSpawner existing = (CreatureSpawner) block;
                         utils.setSpawnerMob(drop, existing.getSpawnedType());
+                        ItemMeta itemMeta = drop.getItemMeta();
+                        itemMeta.setDisplayName(ChatColor.RESET + existing.getSpawnedType().name());
+                        drop.setItemMeta(itemMeta);
+                        
                         cloc.getWorld().dropItem(block.getLocation().add(0.5, 0.5, 0.5), drop);
                         block.setType(AIR);
                         block.update(true);
